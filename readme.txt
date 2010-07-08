@@ -6,7 +6,7 @@ Requires at least: 3.0
 Tested up to: 3.0
 Stable tag: trunk
 
-Avoid errors when using WP MU network activation
+Avoid errors when using WordPress MultiSite network activation
 
 == Description ==
 
