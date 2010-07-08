@@ -23,10 +23,13 @@ What this plugin does:
 
 == Installation ==
 
-You can either install it automatically from the WordPress admin, or do it manually:
+1. Download and unzip
+1. Put the proper-network-activation.php file in /wp-content/mu-plugins/
 
-1. Unzip "Front-end Editor" archive and put the folder into your plugins folder (/wp-content/plugins/).
-1. Activate the plugin from the Plugins menu.
+OR:
+
+1. Install automatically from the WordPress admin
+2. Activate it network wide
 
 == Frequently Asked Questions ==
 
