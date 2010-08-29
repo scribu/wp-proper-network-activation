@@ -19,7 +19,7 @@ What this plugin does:
 * when doing a network de/activation, it triggers the de/activation hook on all sites in the network
 * when creating a new site, it triggers the activation hook for all active network plugins on that site
 
-**Note:** this plugin is not recommended for very large networks of sites.
+Links: [Plugin News](http://scribu.net/wordpress/proper-network-activation) | [Author's Site](http://scribu.net)
 
 == Installation ==
 
