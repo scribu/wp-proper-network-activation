@@ -6,7 +6,7 @@ Description: Use the network activation feature of WP MultiSite without problems
 Author: scribu
 Author URI: http://scribu.net/
 Plugin URI: http://scribu.net/wordpress/proper-network-activation
-
+Network: true
 
 Copyright (C) 2010 Cristi Burcă (scribu@gmail.com)
 
