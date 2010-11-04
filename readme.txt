@@ -3,7 +3,7 @@ Contributors: scribu
 Donate link: http://scribu.net/paypal
 Tags: activation, admin, plugins, multisite
 Requires at least: 3.0
-Tested up to: 3.0
+Tested up to: 3.1-alpha
 Stable tag: 1.0
 
 Avoid errors when using WordPress MultiSite network activation
@@ -41,6 +41,9 @@ Make sure your host is running PHP 5. The only foolproof way to do this is to ad
 <br>
 
 == Changelog ==
+
+= 1.0.1 =
+* activate 5 sites a time, via AJAX requests
 
 = 1.0 =
 * initial release
