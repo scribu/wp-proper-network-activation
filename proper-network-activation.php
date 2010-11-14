@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Proper Network Activation
-Version: 1.0.1
+Version: 1.0.2
 Description: Use the network activation feature of WP MultiSite without problems
 Author: scribu
 Author URI: http://scribu.net/
@@ -90,11 +90,11 @@ class Proper_Network_Activation {
 		$total = get_blog_count();
 
 		$message = sprintf( $messages[ $action ],
-			html( 'span', array( 'id' => 'pna-count-current' ), 0 ),
-			html( 'span', array( 'id' => 'pna-count-total' ), $total )
+			"<span id='pna-count-current'>0</span>",
+			"<span id='pna-count-total'>$total</span>"
 		);
 
-		echo html( 'div', array( 'class' => 'updated' ), html( 'p', array( 'id' => 'pna' ), $message ) );
+		echo "<div class='updated'><p id='pna'>$message</p></div>";
 
 		$ajax_url = add_query_arg( 'action', self::AJAX_KEY, admin_url( 'admin-ajax.php' ) );
 ?>

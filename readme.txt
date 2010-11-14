@@ -42,6 +42,9 @@ Make sure your host is running PHP 5. The only foolproof way to do this is to ad
 
 == Changelog ==
 
+= 1.0.2 =
+* fix fatal error due to undefined html() function
+
 = 1.0.1 =
 * activate 5 sites a time, via AJAX requests
 
