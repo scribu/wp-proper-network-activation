@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Proper Network Activation
-Version: 1.0.2
+Version: 1.0.3-alpha
 Description: Use the network activation feature of WP MultiSite without problems
 Author: scribu
 Author URI: http://scribu.net/
@@ -84,6 +84,7 @@ class Proper_Network_Activation {
 			return;
 
 		$queue = get_site_option( "network_{$action}_queue", array() );
+
 		if ( empty( $queue ) )
 			return;
 
@@ -145,7 +146,16 @@ jQuery(document).ready(function($) {
 
 		global $wpdb;
 
-		$blogs = $wpdb->get_col( $wpdb->prepare( "SELECT blog_id FROM {$wpdb->blogs} WHERE site_id = '{$wpdb->siteid}' AND spam = '0' AND deleted = '0' AND archived = '0' ORDER BY registered DESC LIMIT %d, 5", $offset ) );
+		$blogs = $wpdb->get_col( $wpdb->prepare( "
+			SELECT blog_id 
+			FROM {$wpdb->blogs}
+			WHERE site_id = %d
+			AND blog_id <> %d
+			AND spam = '0' 
+			AND deleted = '0' 
+			AND archived = '0' 
+			ORDER BY registered DESC LIMIT %d, 5
+		", $wpdb->siteid, $wpdb->blogid, $offset ) );
 
 		foreach ( $blogs as $blog_id ) {
 			switch_to_blog( $blog_id );

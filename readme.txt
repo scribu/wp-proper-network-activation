@@ -4,7 +4,7 @@ Donate link: http://scribu.net/paypal
 Tags: activation, admin, plugins, multisite
 Requires at least: 3.0
 Tested up to: 3.1-alpha
-Stable tag: trunk
+Stable tag: 1.0.2
 
 Avoid errors when using WordPress MultiSite network activation
 
@@ -41,6 +41,9 @@ Make sure your host is running PHP 5. The only foolproof way to do this is to ad
 <br>
 
 == Changelog ==
+
+= 1.0.3 =
+* prevent double activation for current blog
 
 = 1.0.2 =
 * fix fatal error due to undefined html() function
