@@ -34,7 +34,11 @@ class Proper_Network_Activation {
 		add_action( 'activated_plugin',  array( __CLASS__, 'queue' ), 10, 2 );
 		add_action( 'deactivated_plugin',  array( __CLASS__, 'queue' ), 10, 2 );
 
-		add_action( 'admin_notices', array( __CLASS__, 'admin_notices' ) );
+		if ( version_compare('3.1', get_bloginfo('version'), '<' ) )
+			add_action( 'admin_notices', array( __CLASS__, 'admin_notices' ) );
+		else
+			add_action( 'network_admin_notices', array( __CLASS__, 'admin_notices' ) );
+
 		add_action( 'wp_ajax_' . self::AJAX_KEY, array( __CLASS__, 'ajax_response' ) );
 
 		add_action( 'wpmu_new_blog', array( __CLASS__, 'setup' ) );
@@ -103,7 +107,7 @@ class Proper_Network_Activation {
 jQuery(document).ready(function($) {
 	var ajax_url = '<?php echo $ajax_url; ?>',
 		_action = '<?php echo $action; ?>',
-		total = <?php echo $total; ?>;
+		total = <?php echo $total; ?>,
 		offset = 0,
 		count = 5;
 
@@ -112,9 +116,8 @@ jQuery(document).ready(function($) {
 	function call_again() {
 		if ( offset > total ) {
 			$.post(ajax_url, {'_action': _action, 'done': 1});
-			$('#pna')
-				.html('<?php _e( 'Done.', 'proper-network-activation' ); ?>')
-				.parent('div').fadeOut();
+			$display.html(total);
+			$('#pna').parent('div').fadeOut('slow');
 			return;
 		}
 
@@ -147,14 +150,15 @@ jQuery(document).ready(function($) {
 		global $wpdb;
 
 		$blogs = $wpdb->get_col( $wpdb->prepare( "
-			SELECT blog_id 
+			SELECT blog_id
 			FROM {$wpdb->blogs}
 			WHERE site_id = %d
 			AND blog_id <> %d
-			AND spam = '0' 
-			AND deleted = '0' 
-			AND archived = '0' 
-			ORDER BY registered DESC LIMIT %d, 5
+			AND spam = '0'
+			AND deleted = '0'
+			AND archived = '0'
+			ORDER BY registered DESC
+			LIMIT %d, 5
 		", $wpdb->siteid, $wpdb->blogid, $offset ) );
 
 		foreach ( $blogs as $blog_id ) {
