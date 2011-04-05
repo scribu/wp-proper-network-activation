@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Proper Network Activation
-Version: 1.0.3-alpha
+Version: 1.0.3
 Description: Use the network activation feature of WP MultiSite without problems
 Author: scribu
 Author URI: http://scribu.net/
@@ -34,10 +34,7 @@ class Proper_Network_Activation {
 		add_action( 'activated_plugin',  array( __CLASS__, 'queue' ), 10, 2 );
 		add_action( 'deactivated_plugin',  array( __CLASS__, 'queue' ), 10, 2 );
 
-		if ( version_compare('3.1', get_bloginfo('version'), '<' ) )
-			add_action( 'admin_notices', array( __CLASS__, 'admin_notices' ) );
-		else
-			add_action( 'network_admin_notices', array( __CLASS__, 'admin_notices' ) );
+		add_action( 'network_admin_notices', array( __CLASS__, 'admin_notices' ) );
 
 		add_action( 'wp_ajax_' . self::AJAX_KEY, array( __CLASS__, 'ajax_response' ) );
 
@@ -45,10 +42,6 @@ class Proper_Network_Activation {
 	}
 
 	static function queue( $plugin, $network_wide = null ) {
-		// WP < 3.1
-		if ( is_null( $network_wide ) )
-			$network_wide = is_plugin_active_for_network( $plugin );	// doesn't work for deactivation
-
 		if ( !$network_wide )
 			return;
 
@@ -67,9 +60,7 @@ class Proper_Network_Activation {
 	}
 
 	static function admin_notices() {
-		global $pagenow;
-
-		if ( 'plugins.php' != $pagenow )
+		if ( 'plugins-network' != get_current_screen()->id )
 			return;
 
 		$messages = array(
@@ -100,8 +91,6 @@ class Proper_Network_Activation {
 		);
 
 		echo "<div class='updated'><p id='pna'>$message</p></div>";
-
-		$ajax_url = add_query_arg( 'action', self::AJAX_KEY, admin_url( 'admin-ajax.php' ) );
 ?>
 <script type="text/javascript">
 jQuery(document).ready(function($) {
@@ -113,15 +102,31 @@ jQuery(document).ready(function($) {
 
 	var $display = $('#pna-count-current');
 
+	function done() {
+		var data = {
+			action: 'pna',
+			_action: _action,
+			done: 1
+		}
+
+		$.post(ajaxurl, data, jQuery.noop);
+	}
+
 	function call_again() {
+		var data = {
+			action: 'pna',
+			_action: _action,
+			offset: offset
+		}
+
 		if ( offset > total ) {
-			$.post(ajax_url, {'_action': _action, 'done': 1});
+			done();
 			$display.html(total);
 			$('#pna').parent('div').fadeOut('slow');
 			return;
 		}
 
-		$.post(ajax_url, {'_action': _action, 'offset': offset}, function(response) {
+		$.post(ajaxurl, data, function(response) {
 			$display.html(offset);
 
 			offset += count;

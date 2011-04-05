@@ -2,9 +2,9 @@
 Contributors: scribu
 Donate link: http://scribu.net/paypal
 Tags: activation, admin, plugins, multisite
-Requires at least: 3.0
+Requires at least: 3.1
 Tested up to: 3.1
-Stable tag: 1.0.2
+Stable tag: trunk
 
 Avoid errors when using WordPress MultiSite network activation
 
