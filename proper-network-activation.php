@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Proper Network Activation
-Version: 1.0.3
+Version: 1.0.4-beta
 Description: Use the network activation feature of WP MultiSite without problems
 Author: scribu
 Author URI: http://scribu.net/
@@ -31,8 +31,8 @@ class Proper_Network_Activation {
 	const AJAX_KEY = 'pna';
 
 	static function init() {
-		add_action( 'activated_plugin',  array( __CLASS__, 'queue' ), 10, 2 );
-		add_action( 'deactivated_plugin',  array( __CLASS__, 'queue' ), 10, 2 );
+		add_action( 'activated_plugin',  array( __CLASS__, 'update_queue' ), 10, 2 );
+		add_action( 'deactivated_plugin',  array( __CLASS__, 'update_queue' ), 10, 2 );
 
 		add_action( 'network_admin_notices', array( __CLASS__, 'admin_notices' ) );
 
@@ -41,7 +41,7 @@ class Proper_Network_Activation {
 		add_action( 'wpmu_new_blog', array( __CLASS__, 'setup' ) );
 	}
 
-	static function queue( $plugin, $network_wide = null ) {
+	static function update_queue( $plugin, $network_wide = null ) {
 		if ( !$network_wide )
 			return;
 
@@ -49,31 +49,24 @@ class Proper_Network_Activation {
 
 		$action = str_replace( 'activated', 'activate', $action );
 
-		if ( !has_filter( $action . '_' . $plugin ) && !has_filter( $action . '_plugin' ) )
-			return;
-
 		$queue = get_site_option( "network_{$action}_queue", array() );
-		if ( !in_array( $plugin, $queue ) ) {
-			$queue[] = $plugin;
-			update_site_option( "network_{$action}_queue", $queue );
-		}
+
+		$queue[$plugin] = ( has_filter( $action . '_' . $plugin ) || has_filter( $action . '_plugin' ) );
+
+		update_site_option( "network_{$action}_queue", $queue );
 	}
 
 	static function admin_notices() {
 		if ( 'plugins-network' != get_current_screen()->id )
 			return;
 
-		$messages = array(
-			'activate' => __( 'Performing network activation(s): %s / %s sites', 'proper-network-activation' ),
-			'deactivate' => __( 'Performing network deactivation(s): %s / %s sites', 'proper-network-activation' ),
-		);
-
 		$action = false;
-		foreach ( array_keys( $messages ) as $key )
+		foreach ( array( 'activate', 'deactivate' ) as $key ) {
 			if ( isset( $_REQUEST[ $key ] ) || isset( $_REQUEST[ $key . '-multi' ] ) ) {
 				$action = $key;
 				break;
 			}
+		}
 
 		if ( !$action )
 			return;
@@ -83,7 +76,18 @@ class Proper_Network_Activation {
 		if ( empty( $queue ) )
 			return;
 
+		if ( !in_array( true, $queue ) ) {
+			delete_site_option( "network_{$action}_queue" );
+			echo '<div class="updated"><p>' . __( 'Network (de)activation: no further action necessary.', 'proper-network-activation' ) . '</p></div>';
+			return;
+		}
+
 		$total = get_blog_count();
+
+		$messages = array(
+			'activate' => __( 'Network activation: installed on %s / %s sites.', 'proper-network-activation' ),
+			'deactivate' => __( 'Network deactivation: uninstalled on %s / %s sites.', 'proper-network-activation' ),
+		);
 
 		$message = sprintf( $messages[ $action ],
 			"<span id='pna-count-current'>0</span>",
@@ -94,7 +98,7 @@ class Proper_Network_Activation {
 ?>
 <script type="text/javascript">
 jQuery(document).ready(function($) {
-	var ajax_url = '<?php echo $ajax_url; ?>',
+	var
 		_action = '<?php echo $action; ?>',
 		total = <?php echo $total; ?>,
 		offset = 0,
@@ -122,7 +126,6 @@ jQuery(document).ready(function($) {
 		if ( offset > total ) {
 			done();
 			$display.html(total);
-			$('#pna').parent('div').fadeOut('slow');
 			return;
 		}
 
@@ -144,7 +147,7 @@ jQuery(document).ready(function($) {
 		$action = $_POST['_action'];
 
 		if ( isset( $_POST['done'] ) ) {
-			delete_site_option( "network_{$action}_queue", array() );
+			delete_site_option( "network_{$action}_queue" );
 			die(1);
 		}
 
@@ -169,7 +172,7 @@ jQuery(document).ready(function($) {
 		foreach ( $blogs as $blog_id ) {
 			switch_to_blog( $blog_id );
 
-			foreach ( $queue as $plugin ) {
+			foreach ( $queue as $plugin => $actionable ) {
 				self::do_action( $action, $plugin );
 			}
 		}

@@ -42,6 +42,9 @@ Make sure your host is running PHP 5. The only foolproof way to do this is to ad
 
 == Changelog ==
 
+= 1.0.4 =
+* more obvious user messages
+
 = 1.0.3 =
 * prevent double activation for current blog
 * WP 3.1 compatibility
