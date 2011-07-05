@@ -1,0 +1,25 @@
+# Copyright (C) 2010 
+# This file is distributed under the same license as the  package.
+msgid ""
+msgstr ""
+"Project-Id-Version:  \n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/pna\n"
+"POT-Creation-Date: 2011-07-05 18:35:32+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2010-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+
+#: proper-network-activation.php:81
+msgid "Network (de)activation: no further action necessary."
+msgstr ""
+
+#: proper-network-activation.php:88
+msgid "Network activation: installed on %s / %s sites."
+msgstr ""
+
+#: proper-network-activation.php:89
+msgid "Network deactivation: uninstalled on %s / %s sites."
+msgstr ""
