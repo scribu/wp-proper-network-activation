@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Proper Network Activation
-Version: 1.0.4-beta
+Version: 1.0.4
 Description: Use the network activation feature of WP MultiSite without problems
 Author: scribu
 Author URI: http://scribu.net/
