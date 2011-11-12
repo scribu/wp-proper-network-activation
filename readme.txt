@@ -1,6 +1,5 @@
 === Proper Network Activation ===
 Contributors: scribu
-Donate link: http://scribu.net/paypal
 Tags: activation, admin, plugins, multisite
 Requires at least: 3.1
 Tested up to: 3.2
