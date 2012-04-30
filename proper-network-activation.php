@@ -9,8 +9,6 @@ Plugin URI: http://scribu.net/wordpress/proper-network-activation
 Network: true
 Text Domain: proper-network-activation
 Domain Path: /lang
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */
 
 class Proper_Network_Activation {
