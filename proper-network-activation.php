@@ -1,14 +1,15 @@
 <?php
 /*
-Plugin Name: Proper Network Activation
-Version: 1.0.4
-Description: Use the network activation feature of WP MultiSite without problems
-Author: scribu
-Author URI: http://scribu.net/
-Plugin URI: http://scribu.net/wordpress/proper-network-activation
-Network: true
-Text Domain: proper-network-activation
-Domain Path: /lang
+Plugin Name:    Proper Network Activation
+Version:        1.0.5
+Description:    Use the network activation feature of WP MultiSite without problems
+Author:         scribu
+Author URI:     http://scribu.net/
+Plugin URI:     http://scribu.net/wordpress/proper-network-activation
+
+Network:        true
+Text Domain:    proper-network-activation
+Domain Path:    /languages/
 */
 
 class Proper_Network_Activation {
