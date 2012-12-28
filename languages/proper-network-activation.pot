@@ -12,6 +12,10 @@ msgstr ""
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 
+#: proper-network-activation.php:5
+msgid "Use the network activation feature of WP MultiSite without problems"
+msgstr ""
+
 #: proper-network-activation.php:81
 msgid "Network (de)activation: no further action necessary."
 msgstr ""
