@@ -1,15 +1,16 @@
 <?php
 /*
-Plugin Name:    Proper Network Activation
-Version:        1.0.5
-Description:    Use the network activation feature of WP MultiSite without problems
-Author:         scribu
-Author URI:     http://scribu.net/
-Plugin URI:     http://scribu.net/wordpress/proper-network-activation
-
-Network:        true
-Text Domain:    proper-network-activation
-Domain Path:    /languages/
+Plugin Name: Proper Network Activation
+Plugin URI: http://scribu.net/wordpress/proper-network-activation
+Version: 1.0.6
+Description: Use the network activation feature of WP MultiSite without problems
+Author: scribu
+Author URI: http://scribu.net/
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Network: true
+Text Domain: proper-network-activation
+Domain Path: /languages
 */
 
 class Proper_Network_Activation {
@@ -21,6 +22,7 @@ class Proper_Network_Activation {
 		add_action( 'deactivated_plugin',  array( __CLASS__, 'update_queue' ), 10, 2 );
 
 		add_action( 'network_admin_notices', array( __CLASS__, 'admin_notices' ) );
+		load_plugin_textdomain( 'proper-network-activation', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 
 		add_action( 'wp_ajax_' . self::AJAX_KEY, array( __CLASS__, 'ajax_response' ) );
 
