@@ -21,6 +21,7 @@ class Proper_Network_Activation {
 		add_action( 'deactivated_plugin',  array( __CLASS__, 'update_queue' ), 10, 2 );
 
 		add_action( 'network_admin_notices', array( __CLASS__, 'admin_notices' ) );
+		load_plugin_textdomain( 'proper-network-activation', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 
 		add_action( 'wp_ajax_' . self::AJAX_KEY, array( __CLASS__, 'ajax_response' ) );
 
