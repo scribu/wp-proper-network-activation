@@ -48,9 +48,11 @@ Make sure your host is running PHP 5. The only foolproof way to do this is to ad
 
 == Changelog ==
 
+= 1.0.6 =
+* fixed translation support. props cfoellmann
+
 = 1.0.5 =
-* German translation
-* complete internationalization support
+* German translation. props cfoellmann
 
 = 1.0.4 =
 * more obvious user messages
